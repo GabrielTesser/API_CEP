@@ -11,17 +11,15 @@ class EnderecoController extends Controller
   
     public static function getLogradouroByCep() : void
     {
-        try
-        {
-            $logradouro = $_GET['logradouro'];
+        try {
+
+            $cep = parent::getIntFormUrl((isset($_GET['cep'])) ? $_GET['cep'] : null, 'cep');
 
             $model = new EnderecoModel();
-            $model->getCepByLogradouro($logradouro);
+            $model->getLogradouroByCep($cep);
 
-            parent::getExceptionAsJSON($model->rows);
-        }
-        catch (Exception $e)
-        {
+            parent::setResponseAsJSON($model->rows);
+        } catch (Exception $e) {
             parent::getExceptionAsJSON($e);
         }
     }

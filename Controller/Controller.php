@@ -35,9 +35,10 @@ abstract class Controller{
         $exception = [
             'message' => $e->getMessage(),
             'code' => $e->getCode(),
-            'fine' => $e->getFile(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
             'traceAsString' => $e->getTraceAsString(),
-            'previous' => $e->getPrevious()
+            'previous' => $e->getPrevious(),
         ];
 
         http_response_code(400);
@@ -46,7 +47,7 @@ abstract class Controller{
         header("Content-type: application/json; charset=utf-8");
         header("Cache-Control: no-cache, must-revalidate");
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        header("Pragma: public"); 
+        header("Pragma: public");      
         
         exit(json_encode($exception));
     }
@@ -65,13 +66,12 @@ abstract class Controller{
 
     protected static function getIntFormUrl($var_get, $var_name = null) : int
     {
-        self::IsGet();
+        self::isGET();
 
         if(!empty($var_get))
             return (int) $var_get;
-
         else
-            throw new Exception("Varuável $var_name não identificada");
+            throw new Exception("Variável $var_name não identificada.");
     }
 
     protected static function getStringFormUrl($var_get, $var_name = null) : string
