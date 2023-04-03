@@ -5,5 +5,5 @@ use Exception;
 
 abstract class Model
 {
-    public $rows;
+    public $row;
 }

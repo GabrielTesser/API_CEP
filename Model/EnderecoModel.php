@@ -32,7 +32,7 @@ class EnderecoModel extends Model
         {
             $dao = new EnderecoDao();
 
-            $this->$rows = $dao->selectCepByLogradouro($logradouro);
+            $this->rows = $dao->selectCepByLogradouro($logradouro);
         }
         catch(Exception $e)
         {
@@ -42,31 +42,23 @@ class EnderecoModel extends Model
 
     public function getLogradouroByBairroAndCidade(string $bairro, int $id_cidade)
     {
-        try
-        {
-            $dao = new EnderecoDAO();
+        try {
+            $dao = new EnderecoDAO;
 
+            $this->rows = $dao->selectLogradouroByBairroAndCidade($bairro, $id_cidade);
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
-        catch(Exception $e)
-        {
-            parent::getExeptionAsJson($e);
-        }
-
     }
 
-    public function getBairrosByIdCidade() : void
+    public function getBairrosByIdCidade($id_cidade) : void
     {
-        try{
-            $id_cidade = parent::getIntFormUrl(isset($_GET['id_cidade']) ? $_GET['id_cidade'] : null);
-        
-            $model = new EnderecoModel();
-            $model->getBairrosByIdCidade($id_cidade);
+        try {
+            $dao = new EnderecoDAO;
 
-            parent::getResponsAsJason($e);
-        }
-        catch(Exception $e)
-        {
-            parent::getExeptionAsJson($e);
+            $this->rows = $dao->SelectBairrobyIdCiadade($id_cidade);
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 
